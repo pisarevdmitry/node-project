@@ -31730,6 +31730,8 @@ var ChatComponent = (function (_super) {
             self.users = object;
         });
         this.socket.on('chat message', function (msg, user) {
+          console.log('msg' , msg)
+          console.log('user', user)
             var obj = {
                 text: msg,
                 isMyMessage: false
