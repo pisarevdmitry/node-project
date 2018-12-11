@@ -9,7 +9,8 @@
     "migrate:up": "node_modules/.bin/sequelize db:migrate",
     "migrate:down": "node_modules/.bin/sequelize db:migrate:undo:all",
     "seed:up": "node_modules/.bin/sequelize db:seed:all",
-    "start": "node server/server"
+    "start": "node server/server",
+    "heroku-postbuild": "node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:seed:all",
   },
   "repository": {
     "type": "git",
@@ -41,7 +42,6 @@
   "devDependencies": {
     "nodemon": "^1.18.7"
   },
-  "heroku-postbuild": "node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:seed:all",
   "engines": {
     "node": "10.x"
   }
