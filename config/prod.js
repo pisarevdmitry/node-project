@@ -20,7 +20,7 @@ module.exports = {
     jwt:{
         secret: process.env.JWT
     },
-    development: {
+    production: {
         username: dbconfig.user,
         password: dbconfig.password,
         database: dbconfig.db,
