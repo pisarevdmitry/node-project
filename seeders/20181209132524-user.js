@@ -27,7 +27,7 @@ module.exports = {
     return created
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface, Sequelize) => { 
    return Service.delete({where: {
       username: 'admin'
     }})

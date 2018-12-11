@@ -22,6 +22,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 require('./services/sequelize');
 require('./models');
 
+const userService = require('./services/userService');
+const Service = new userService()
+const created = await Service.signUp({
+  username :'admin',
+  password :'123',
+},{
+  chat_create: true,
+  chat_read: true,
+  chat_update: true,
+  chat_delete: true,
+  news_create: true,
+  news_read: true,
+  news_update: true,
+  news_delete: true,
+  setting_create: true,
+  setting_read: true,
+  setting_update: true,
+  setting_delete: true,
+})
 
 
 app.use('/api', routes);
