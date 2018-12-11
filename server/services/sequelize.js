@@ -5,6 +5,7 @@ const sequelize = new Sequelize(db.database, db.login, db.password, {
   host: db.host,
   dialect: db.dialect,
   pool: db.pool,
+  port: db.port,
 });
 
 sequelize.sync();

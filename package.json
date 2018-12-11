@@ -8,7 +8,8 @@
     "start:dev": "nodemon server/server",
     "migrate:up": "node_modules/.bin/sequelize db:migrate",
     "migrate:down": "node_modules/.bin/sequelize db:migrate:undo:all",
-    "seed:up": "node_modules/.bin/sequelize db:seed:all"
+    "seed:up": "node_modules/.bin/sequelize db:seed:all",
+    "start": "node server/server"
   },
   "repository": {
     "type": "git",
@@ -39,5 +40,9 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.7"
+  },
+  "heroku-postbuild": "node_modules/.bin/sequelize db:migrate",
+  "engines": {
+    "node": "10.x"
   }
 }
