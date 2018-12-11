@@ -24,7 +24,7 @@ require('./models');
 
 const userService = require('./services/userService');
 const Service = new userService()
-const created = await Service.signUp({
+Service.signUp({
   username :'admin',
   password :'123',
 },{
