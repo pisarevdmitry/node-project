@@ -1,6 +1,6 @@
 'use strict';
-const userService = require('../server/services/userService');
-const Service = new userService()
+const authService = require('../server/services/authService');
+const Service = new authService()
 module.exports = {
 
   up: async (queryInterface, Sequelize) => {
