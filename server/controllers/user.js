@@ -59,10 +59,11 @@ module.exports.getUsers = async (req, res) => {
 
 module.exports.deleteUser = async (req, res) => {
   const response = await Service.deleteUser(req.params.id);
+  console.log(response)
   if (!response.status) {
     return res.status(400).json({ error: response.message });
   }
-  res.send;
+  res.json({});
 };
 module.exports.updateUserPermission = async (req, res) => {
   const data = JSON.parse(req.body);
@@ -79,5 +80,5 @@ module.exports.updateUserPermission = async (req, res) => {
     return res.status(401).json({ error: response.message });
   }
   
-  res.json();
+  res.json({});
 };

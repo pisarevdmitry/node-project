@@ -11,7 +11,7 @@ class UserService extends DbService {
     super(User);
     this.permissionsService = new permissionsService();
     this.imageService = new imageService();
-    this.password = new passwordService()
+    this.password = new passwordService();
   }
   async getUsers() {
     try {
@@ -67,18 +67,27 @@ class UserService extends DbService {
   }
 
   async deleteUser(id) {
+    const transaction = await this.transaction();
     try {
-      await this.delete({
-        where: {
-          id
-        }
-      });
-
+      const user = await this.findById(id, {transaction});
+      await user.destroy({transaction});
+      const image = user.dataValues.image;
+      console.log('image',image)
+      if(image) {
+        this.imageService.deleteFile(
+        path.resolve(
+          process.cwd(),
+          upload,
+          path.basename(image))
+      );
+      }
+      transaction.commit();
       return {
         status: true,
         message: null
       };
     } catch (e) {
+      transaction.rollback()
       return {
         status: false,
         message: 'error'
@@ -115,9 +124,12 @@ class UserService extends DbService {
   async updateUserImage({ id, ...data }) {
     try {
       const user = await this.findById(id, { include: ['permission'] });
-      const imagePath =  user && user.dataValues.image ? path.basename(user.dataValues.image): null
+      const imagePath =
+        user && user.dataValues.image
+          ? path.basename(user.dataValues.image)
+          : null;
       const uploadDir = path.basename(upload);
-      await this.imageService.proceesImage(data.image.path)
+      await this.imageService.proceesImage(data.image.path);
 
       const updatedUser = await user.update({
         ...data,

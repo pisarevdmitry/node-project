@@ -8,6 +8,7 @@ class ImageService {
     this.imageHandler = jimp
   }
   deleteFile(path) {
+    console.log(path, this.fs.existsSync(path))
     if (path && this.fs.existsSync(path)) {
         this.fs.unlinkSync(path);
       }
