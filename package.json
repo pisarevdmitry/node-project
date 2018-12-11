@@ -41,7 +41,7 @@
   "devDependencies": {
     "nodemon": "^1.18.7"
   },
-  "heroku-postbuild": "node_modules/.bin/sequelize db:seed:all",
+  "heroku-postbuild": "node_modules/.bin/sequelize db:seed:all && echo hello",
   "engines": {
     "node": "10.x"
   }
