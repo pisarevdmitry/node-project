@@ -13,7 +13,8 @@ stages:
 jobs:
   include:
     - stage: before test
-      script: psql -c 'create database travis_ci_test;' -U postgres
+      before_script:
+        - psql -c 'create database travis_ci_test;' -U postgres
       script: npm run migrate:up
     - stage: test
       script: npm run test
