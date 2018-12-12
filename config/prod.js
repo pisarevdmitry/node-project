@@ -14,7 +14,8 @@ module.exports = {
             min: 0,
             acquire: 30000,
             idle: 10000,
-          }
+          },
+        
     },
     upload: process.env.UPLOAD_PATH,
     jwt:{
