@@ -7,14 +7,12 @@ services:
   - postgresql
 
 stages:
-  - before test
   - test
 
 jobs:
   include:
-    - stage: before test
+    - stage: test
       before_script:
         - psql -c 'create database travis_ci_test;' -U postgres
       script: npm run migrate:up
-    - stage: test
       script: npm run test
