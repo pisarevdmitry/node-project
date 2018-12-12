@@ -1,7 +1,11 @@
 ## LoftSchool
-
 Большая домашняя работа курса по Node.js - Корпоративная система _"LoftSystem"_.
-
+Запуск:
+1. в файле по пути config/dev  Указать параметры доступа к вашей базе данных  postgresSQL
+2. npm install
+3. npm run migrate:up
+4. npm run seed:up(создаст админа с логином: admin, паролем: 123)
+5. npm run  start:dev
 ### Задача
 
 В папке ./dist находится подготовленная frontend-часть проекта, ваша задача - реализовать backend.
