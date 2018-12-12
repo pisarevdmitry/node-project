@@ -16,6 +16,6 @@ stages:
 jobs:
   include:
     - stage: before test
-      script: npm migrate:up
+      script: npm run migrate:up
     - stage: test
-      script: npm test
+      script: npm run test
