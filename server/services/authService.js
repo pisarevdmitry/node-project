@@ -32,8 +32,21 @@ class AuthService extends DbService {
         user: { ...user.dataValues, permission: { ...permissions.dataValues } }
       };
     } catch (e) {
-      transaction.rollback();
-      throw e;
+        transaction.rollback();
+        switch (e.name) {
+            case 'SequelizeUniqueConstraintError':
+            return {
+                status: false,
+                message: 'user already exist',
+                user: null
+              };
+            default:
+            return {
+                status: false,
+                message: e.message,
+                user: null
+              };
+          }
     }
   }
 

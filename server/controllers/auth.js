@@ -13,41 +13,43 @@ module.exports.signUp = async (req, res) => {
     permission
   } = JSON.parse(req.body);
   const userPermission = parsePermissions(permission);
-  try {
-    const { user} = await auth.signUp(
-      {
-        username,
-        firstName,
-        surName,
-        middleName,
-        password
-      },
-      userPermission
-    );
-const createdUser = {
-        ...user,
-        permissionId: user.id,
-        access_token: user.token,
-        permission: { ...composePermissions(user.permission) }
-      };
-    res.json(createdUser); 
-  } catch (e) {
-    switch (e.name) {
-      case 'SequelizeUniqueConstraintError':
-        return res.status(400).json({ error: 'user already exist' });
-      default:
-        return res.status(400).json({ error: e });
-    }
+  
+  if(!username || !password) {
+    return res.status(401).json({ error: 'Заполните все поля' });
   }
+  const response = await auth.signUp(
+    {
+      username,
+      firstName,
+      surName,
+      middleName,
+      password
+    },
+    userPermission
+  );
+  if (!response.status) {
+    return res.status(401).json({ error: response.message });
+  }
+  const createdUser = {
+    ...response.user,
+    permissionId: response.user.id,
+    access_token: response.user.token,
+    permission: { ...composePermissions(response.user.permission) }
+  };
+  res.json(createdUser);
 };
 
 module.exports.signIn = async (req, res) => {
   const { username, password, remembered } = JSON.parse(req.body);
+
+  if(!username || !password) {
+    return res.status(401).json({ error: 'Заполните все поля' });
+  }
   const response = await auth.SignInLocal(username, password);
   if (!response.status) {
     return res.status(401).json({ error: response.message });
   }
-  const token = response.user.token
+  const token = response.user.token;
   const user = {
     ...response.user,
     permissionId: response.user.id,
@@ -60,10 +62,10 @@ module.exports.signIn = async (req, res) => {
       maxAge: 60 * 60 * 1000,
       path: '/',
       httpOnly: false
-    }); 
+    });
   }
   res.json(user);
-}; 
+};
 
 module.exports.me = async (req, res) => {
   const { access_token: token } = JSON.parse(req.body);
