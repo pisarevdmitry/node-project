@@ -30,15 +30,17 @@ const createUser = () => {
 };
 beforeEach(async done => {
   user = await createUser();
+  console.log('createuser')
   done();
 });
 
 afterEach(async done => {
     await User.destroy({ where: {}, truncate: true, cascade: true });
+    console.log('deleteUser')
     done();
   });
 
-describe('signUn', () => {
+describe('signUp', () => {
 
   describe('create user suceesfully', () => {
      it('status true', () => {
@@ -60,7 +62,9 @@ describe('signUn', () => {
     describe('user already exist', () => {
       let response;
       beforeEach(async done => {
+          console.log('createUser')
         response = await createUser();
+        console.log(response)
         done();
       });
 
