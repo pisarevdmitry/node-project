@@ -10,7 +10,6 @@
     "migrate:down": "node_modules/.bin/sequelize db:migrate:undo:all",
     "seed:up": "node_modules/.bin/sequelize db:seed:all",
     "start": "node server/server",
-    "heroku-postbuild": "node_modules/.bin/sequelize db:migrate"
   },
   "repository": {
     "type": "git",
