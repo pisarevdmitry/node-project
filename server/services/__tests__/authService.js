@@ -36,7 +36,7 @@ beforeEach(async done => {
 
 afterEach(async done => {
     await User.destroy({ where: {}, truncate: true, cascade: true });
-    console.log('deleteUser')
+    console.log(User.findAll({where:{}}))
     done();
   });
 
