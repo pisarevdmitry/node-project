@@ -8,7 +8,9 @@ class DbService {
   transaction() {
     return this.db.transaction();
   }
-
+  close() {
+    this.db.close();
+  }
   delete(options) {
     return this.model.destroy({ ...options });
   }

@@ -2,7 +2,6 @@ const User = require('../../models/User');
 const AuthService = require('../authService');
 const Service = new AuthService();
 
-let user
 jest.setTimeout(15000);
 
 const createUser = () => {
@@ -10,7 +9,7 @@ const createUser = () => {
     {
       username: 'test user',
       password: '123',
-      firstName: 'Mark',
+      firstName: 'Mark'
     },
     {
       chat_create: true,
@@ -30,22 +29,24 @@ const createUser = () => {
 };
 beforeEach(async done => {
   user = await createUser();
-  console.log('createuser')
   done();
 });
 
 afterEach(async done => {
-    await User.destroy({ where: {}, truncate: true, cascade: true });
-    console.log(User.findAll({where:{}}))
-    done();
-  });
+  await User.destroy({ where: {}, truncate: true, cascade: true });
+  done();
+});
+
+afterAll(() => {
+  Service.close();
+});
 
 describe('signUp', () => {
-
   describe('create user suceesfully', () => {
-     it('status true', () => {
+    it('status true', () => {
       expect(user.status).toBeTruthy;
-    }); 
+    });
+
     it('to match ', () => {
       const expected = {
         username: 'test user',
@@ -62,15 +63,14 @@ describe('signUp', () => {
     describe('user already exist', () => {
       let response;
       beforeEach(async done => {
-          console.log('createUser')
         response = await createUser();
-        console.log(response)
         done();
       });
 
       it('status false', async () => {
         expect(response.status).toBeFalsy();
       });
+
       it('message  is user already exist', () => {
         expect(response.message).toEqual('user already exist');
       });
@@ -84,6 +84,7 @@ describe('SignInLocal', () => {
     beforeEach(async () => {
       response = await Service.SignInLocal('test user', '123');
     });
+
     it('status true', () => {
       expect(response.status).toBeTruthy;
     });
@@ -106,6 +107,7 @@ describe('SignInLocal', () => {
           setting_delete: true
         }
       };
+
       expect(response.user).toMatchObject(expected);
     });
   });
@@ -118,18 +120,19 @@ describe('SignInLocal', () => {
       };
       expect(response).toMatchObject(expected);
     });
-    it('incorect password', async() => {
+
+    it('incorect password', async () => {
       response = await Service.SignInLocal('test user', '1234');
       const expected = {
-      status: false,
-      message: 'пароли не совпадают'
-    };
-    expect(response).toMatchObject(expected);
+        status: false,
+        message: 'пароли не совпадают'
+      };
+      expect(response).toMatchObject(expected);
     });
   });
 });
 describe('Signin Jwt', () => {
-  it('success', async () => {
+  it('success', async done => {
     const user = await User.findOne({
       where: {
         username: 'test user'
@@ -159,13 +162,15 @@ describe('Signin Jwt', () => {
       }
     };
     expect(response).toMatchObject(expected);
+    done();
   });
-  it('fail', async() => {
+  it('fail', async done => {
     const response = await Service.signInByJwt('jdhdjhjsjsskjsijdfn');
     const expected = {
-        status: false,
-        message: 'невалидный токен',
-    }
+      status: false,
+      message: 'невалидный токен'
+    };
     expect(response).toMatchObject(expected);
-  })
+    done();
+  });
 });

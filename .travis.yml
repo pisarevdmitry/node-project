@@ -14,6 +14,5 @@ jobs:
     - stage: test
       before_script:
         - psql -c 'create database travis_ci_test;' -U postgres
-        - npm run migrate:up
-         
+        - npm run migrate:up    
       script: npm run test
