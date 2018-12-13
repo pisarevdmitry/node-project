@@ -8,7 +8,7 @@ const fileUpload = multer({ dest: path.resolve(process.cwd(), upload) });
 const auth = require('../controllers/auth');
 const user = require('../controllers/user');
 const news = require('../controllers/news');
-const requireAuth = require('../middleware/requireAuth');
+
 
 router.post('/saveNewUser', auth.signUp)
 router.post('/login',auth.signIn);
