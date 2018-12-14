@@ -1,9 +1,7 @@
 const User = require('../../models/User');
 const AuthService = require('../authService');
 const Service = new AuthService();
-it('test', () => {
-  expect(true).toBeTruthy();
-});
+
 jest.setTimeout(15000);
 let user
 const createUser = () => {
@@ -31,6 +29,7 @@ const createUser = () => {
 };
 beforeAll(async done => {
   user = await createUser();
+  console.error(user)
   done();
 });
 
