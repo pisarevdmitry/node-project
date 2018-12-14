@@ -1,9 +1,11 @@
 const User = require('../../models/User');
 const AuthService = require('../authService');
 const Service = new AuthService();
-
+it('test', () => {
+  expect(true).toBeTruthy();
+});
 jest.setTimeout(15000);
-
+let user
 const createUser = () => {
   return Service.signUp(
     {
@@ -27,18 +29,9 @@ const createUser = () => {
     }
   );
 };
-beforeEach(async done => {
+beforeAll(async done => {
   user = await createUser();
   done();
-});
-
-afterEach(async done => {
-  await User.destroy({ where: {}, truncate: true, cascade: true });
-  done();
-});
-
-afterAll(() => {
-  Service.close();
 });
 
 describe('signUp', () => {
@@ -62,6 +55,7 @@ describe('signUp', () => {
   describe('fail if', () => {
     describe('user already exist', () => {
       let response;
+
       beforeEach(async done => {
         response = await createUser();
         done();
@@ -81,6 +75,7 @@ describe('signUp', () => {
 describe('SignInLocal', () => {
   describe('if success', () => {
     let response;
+
     beforeEach(async () => {
       response = await Service.SignInLocal('test user', '123');
     });
@@ -88,6 +83,7 @@ describe('SignInLocal', () => {
     it('status true', () => {
       expect(response.status).toBeTruthy;
     });
+
     it('has userData', () => {
       const expected = {
         username: 'test user',
@@ -118,6 +114,7 @@ describe('SignInLocal', () => {
         status: false,
         message: 'логин не существует'
       };
+
       expect(response).toMatchObject(expected);
     });
 
@@ -127,10 +124,12 @@ describe('SignInLocal', () => {
         status: false,
         message: 'пароли не совпадают'
       };
+
       expect(response).toMatchObject(expected);
     });
   });
 });
+
 describe('Signin Jwt', () => {
   it('success', async done => {
     const user = await User.findOne({
@@ -161,6 +160,7 @@ describe('Signin Jwt', () => {
         }
       }
     };
+
     expect(response).toMatchObject(expected);
     done();
   });
@@ -170,6 +170,7 @@ describe('Signin Jwt', () => {
       status: false,
       message: 'невалидный токен'
     };
+    
     expect(response).toMatchObject(expected);
     done();
   });

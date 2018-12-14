@@ -46,11 +46,11 @@ class UserService extends DbService {
           }
         }
       );
-
-      if (!permission) {
+  
+      if (!permission || permission[0] === 0) {
         return {
           status: false,
-          message: 'server error'
+          message: 'user dosnt exist'
         };
       }
 
@@ -81,13 +81,13 @@ class UserService extends DbService {
           path.basename(image))
       );
       }
-      transaction.commit();
+      await transaction.commit();
       return {
         status: true,
         message: null
       };
     } catch (e) {
-      transaction.rollback()
+      await transaction.rollback()
       return {
         status: false,
         message: 'error'
@@ -97,6 +97,13 @@ class UserService extends DbService {
 
   async updateUserInfo({ id, ...data }) {
     const user = await this.findById(id, { include: ['permission'] });
+
+    if(!user) {
+      return {
+        status: false,
+        message: 'пользователь не существует'
+      };
+    }
 
     if (data.oldPassword) {
       const isValid = await this.password.comparePasswords(

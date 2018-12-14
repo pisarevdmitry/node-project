@@ -4,7 +4,7 @@
   "description": "Большая домашняя работа курса по Node.js - Корпоративная система _\"LoftSystem\"_.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "start:dev": "nodemon server/server",
     "migrate:up": "node_modules/.bin/sequelize db:migrate",
     "migrate:down": "node_modules/.bin/sequelize db:migrate:undo:all",

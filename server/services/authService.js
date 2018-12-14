@@ -24,7 +24,7 @@ class AuthService extends DbService {
         { ...userPermission, user_id: user.dataValues.id },
         transaction
       );
-      transaction.commit();
+      await transaction.commit();
 
       return {
         status: true,
@@ -32,7 +32,7 @@ class AuthService extends DbService {
         user: { ...user.dataValues, permission: { ...permissions.dataValues } }
       };
     } catch (e) {
-        transaction.rollback();
+        await transaction.rollback();
         switch (e.name) {
             case 'SequelizeUniqueConstraintError':
             return {
@@ -77,7 +77,7 @@ class AuthService extends DbService {
       const expiredAt = Math.floor(Date.now() + 2 * 60 * 60 * 1000);
 
       await user.update({ token, expiredAt }, { transaction });
-      transaction.commit();
+      await transaction.commit();
       return {
         status: true,
         message: null,
@@ -87,7 +87,7 @@ class AuthService extends DbService {
         }
       };
     } catch (e) {
-      transaction.rollback();
+      await transaction.rollback();
       if (e.message) {
         return {
           status: false,
