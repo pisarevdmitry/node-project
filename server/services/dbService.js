@@ -5,29 +5,37 @@ class DbService {
   constructor(model) {
     this.db = sequelize;
     this.model = model;
+    this.SERIALIZABLE = DataTypes.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
+    this.READ_COMMITTED = DataTypes.Transaction.ISOLATION_LEVELS.READ_COMMITTED;
+    this.REPEATABLE_READ = DataTypes.Transaction.ISOLATION_LEVELS.REPEATABLE_READ;
+    this.READ_UNCOMMITTED = DataTypes.Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED
   }
-  transaction(ISOLATION_LEVEL = 'SERIALIZABLE') {
+  transaction(ISOLATION_LEVEL = this.SERIALIZABLE) {
     return this.db.transaction({
-      isolationLevel: this.checkIsolationLevel(ISOLATION_LEVEL)
+      isolationLevel: ISOLATION_LEVEL
     });
   }
-  checkIsolationLevel(type) {
-    switch(type) {
-      case 'READ_UNCOMMITTED': {
-        return DataTypes.Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED
-      }
-      case 'REPEATABLE_READ': {
-        return DataTypes.Transaction.ISOLATION_LEVELS.REPEATABLE_READ
-      }
-      case 'READ_COMMITTED':
-        return DataTypes.Transaction.ISOLATION_LEVELS.READ_COMMITTED
-      default:
-        return DataTypes.Transaction.ISOLATION_LEVELS.SERIALIZABLE
-    }
-  }
+
+  getIsolationLevelSerializable(){
+    return this.SERIALIZABLE
+  } 
+
+  getIsolationLevelReadCommitted(){
+    return this.READ_COMMITTED
+  } 
+
+  getIsolationLevelRepeatableRead(){
+    return this.REPEATABLE_READ
+  } 
+
+  getIsolationLevelReadUncommitted(){
+    return this.READ_UNCOMMITTED
+  } 
+
   close() {
     this.db.close();
   }
+
   delete(options) {
     return this.model.destroy({ ...options });
   }
