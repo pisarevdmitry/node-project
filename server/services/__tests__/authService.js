@@ -29,7 +29,6 @@ const createUser = () => {
 };
 beforeAll(async done => {
   user = await createUser();
-  console.error(user)
   done();
 });
 
@@ -40,7 +39,6 @@ describe('signUp', () => {
     });
 
     it('to match ', () => {
-      console.log(user)
       const expected = {
         username: 'test user auth',
         firstName: 'Mark'
