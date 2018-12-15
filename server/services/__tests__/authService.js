@@ -40,6 +40,7 @@ describe('signUp', () => {
     });
 
     it('to match ', () => {
+      console.log(user)
       const expected = {
         username: 'test user',
         firstName: 'Mark'
