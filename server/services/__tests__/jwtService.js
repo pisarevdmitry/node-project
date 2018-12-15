@@ -1,4 +1,4 @@
-const JwtService = require('../jwtService');
+const JwtService = require('../JwtService');
 const Service = new JwtService();
 
 it('if token incorrect return null',() =>{
