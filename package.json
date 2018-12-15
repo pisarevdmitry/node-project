@@ -4,7 +4,7 @@
   "description": "Большая домашняя работа курса по Node.js - Корпоративная система _\"LoftSystem\"_.",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "start:dev": "nodemon server/server",
     "migrate:up": "node_modules/.bin/sequelize db:migrate",
     "migrate:test": " cross-env NODE_ENV=test npm run migrate:up",

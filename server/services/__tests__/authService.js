@@ -119,7 +119,7 @@ describe('SignInLocal', () => {
     });
 
     it('incorect password', async () => {
-      response = await Service.SignInLocal('test user', '1234');
+      response = await Service.SignInLocal('test user auth', '1234');
       const expected = {
         status: false,
         message: 'пароли не совпадают'
