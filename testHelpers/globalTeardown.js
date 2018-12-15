@@ -3,5 +3,5 @@ require('../server/models')
 module.exports = async function(){
     console.error('test done')
     await Db.truncate({cascade: true})
-    await Db.close()
+    //await Db.close()
 }
