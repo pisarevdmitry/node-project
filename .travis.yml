@@ -13,7 +13,6 @@ jobs:
   include:
     - stage: test
       before_script:
-        - psql -U postgres -c "drop database travis_ci_test"
         - psql -c 'create database travis_ci_test;' -U postgres
         - npm run migrate:up    
       script: npm run test

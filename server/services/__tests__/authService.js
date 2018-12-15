@@ -7,7 +7,7 @@ let user
 const createUser = () => {
   return Service.signUp(
     {
-      username: 'test user',
+      username: 'test user auth',
       password: '123',
       firstName: 'Mark'
     },
@@ -42,7 +42,7 @@ describe('signUp', () => {
     it('to match ', () => {
       console.log(user)
       const expected = {
-        username: 'test user',
+        username: 'test user auth',
         firstName: 'Mark'
       };
       expect({
