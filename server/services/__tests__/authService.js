@@ -77,7 +77,7 @@ describe('SignInLocal', () => {
     let response;
 
     beforeEach(async () => {
-      response = await Service.SignInLocal('test user', '123');
+      response = await Service.SignInLocal('test user auth', '123');
     });
 
     it('status true', () => {
@@ -86,7 +86,7 @@ describe('SignInLocal', () => {
 
     it('has userData', () => {
       const expected = {
-        username: 'test user',
+        username: 'test user auth',
         firstName: 'Mark',
         permission: {
           chat_create: true,
@@ -134,7 +134,7 @@ describe('Signin Jwt', () => {
   it('success', async done => {
     const user = await User.findOne({
       where: {
-        username: 'test user'
+        username: 'test user auth'
       }
     });
     const response = await Service.signInByJwt(user.dataValues.token);
@@ -142,7 +142,7 @@ describe('Signin Jwt', () => {
       status: true,
       message: null,
       user: {
-        username: 'test user',
+        username: 'test user auth',
         firstName: 'Mark',
         permission: {
           chat_create: true,
