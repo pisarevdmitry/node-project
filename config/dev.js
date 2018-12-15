@@ -1,6 +1,6 @@
 module.exports = {
     db:{
-        database: 'loftschool-test',
+        database: 'project-prod',
         login: 'postgres',
         password: 'admin',
         host: '127.0.0.1',
@@ -20,7 +20,7 @@ module.exports = {
     development: {
         username: "postgres",
         password: "admin",
-        database: "loftschool-test",
+        database: "project-prod",
         host: "127.0.0.1",
         dialect: "postgres"
       }   
